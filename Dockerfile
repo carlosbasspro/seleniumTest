@@ -15,4 +15,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 10000
 
 # Comando para rodar o script no host 0.0.0.0 e porta 10000
-CMD ["python", "main.py", "runserver", "0.0.0.0:8000"]
+CMD ["python", "main.py"]
