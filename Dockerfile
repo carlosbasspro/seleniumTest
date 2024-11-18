@@ -1,36 +1,36 @@
-# Use a imagem oficial do Python como base
+# Use the official Python image as the base
 FROM python:3.11-slim
 
-# Instale dependências necessárias para o Selenium, navegador Chrome e Chromedriver
+# Install necessary dependencies for Selenium, Chrome, and Chromedriver
 RUN apt-get update && apt-get install -y \
     wget \
     unzip \
     chromium \
     && apt-get clean
 
-# Remova versões anteriores do Chromedriver, se existirem
+# Remove any previous versions of Chromedriver, if they exist
 RUN rm -f /usr/local/bin/chromedriver
 
-# Baixe e instale o Chromedriver compatível com a versão do Chromium
+# Download and install the Chromedriver compatible with the Chromium version
 RUN wget -q "https://chromedriver.storage.googleapis.com/130.0.6723.116/chromedriver_linux64.zip" \
     && unzip chromedriver_linux64.zip -d /usr/local/bin/ \
     && rm chromedriver_linux64.zip
 
-# Verifique as versões instaladas (opcional, para debug)
+# Verify the installed versions (optional, for debug)
 RUN chromium --version && chromedriver --version
 
-# Defina o diretório de trabalho no contêiner
+# Set the working directory in the container
 WORKDIR /app
 
-# Copie o arquivo Python para o contêiner
+# Copy the Python script to the container
 COPY main.py .
 
-# Copie e instale as dependências
+# Copy and install the dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Exponha a porta 10000
+# Expose port 10000
 EXPOSE 10000
 
-# Comando para rodar o script
+# Command to run the script
 CMD ["python", "main.py"]
