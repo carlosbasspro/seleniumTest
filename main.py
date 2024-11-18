@@ -24,8 +24,8 @@ def search_videos():
 
     # Inicializa o WebDriver
     driver = webdriver.Chrome(options=chrome_options)
-    driver.implicitly_wait(20)
-    wait = WebDriverWait(driver, 20)
+    driver.implicitly_wait(15)
+    wait = WebDriverWait(driver, 15)
 
     try:
         # Navega até o site
