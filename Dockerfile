@@ -8,13 +8,11 @@ RUN apt-get update && apt-get install -y \
     chromium \
     && apt-get clean
 
-# Determine a versão instalada do Chromium e use para obter o Chromedriver correto
-RUN CHROME_VERSION=$(chromium --version | grep -oP '\d+\.\d+\.\d+\.\d+') && \
-    CHROMEDRIVER_VERSION=$(wget -qO- "https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json" | \
-    jq -r ".versions[] | select(.version==\"${CHROME_VERSION}\") | .downloads.chromedriver[] | select(.platform==\"linux64\") | .url") && \
-    wget -q $CHROMEDRIVER_VERSION -O chromedriver_linux64.zip && \
-    unzip chromedriver_linux64.zip -d /usr/local/bin/ && \
-    rm chromedriver_linux64.zip
+# Baixe e instale o Chromedriver compatível com a versão do Chromium
+RUN wget -q "https://chromedriver.storage.googleapis.com/130.0.6723.116/chromedriver_linux64.zip" \
+    && unzip chromedriver_linux64.zip -d /usr/local/bin/ \
+    && rm chromedriver_linux64.zip
+
 
 # Defina o diretório de trabalho no contêiner
 WORKDIR /app
