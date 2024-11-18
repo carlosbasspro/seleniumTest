@@ -4,7 +4,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-import time
 
 app = Flask(__name__)
 
@@ -25,9 +24,8 @@ def search_videos():
 
     # Inicializa o WebDriver
     driver = webdriver.Chrome(options=chrome_options)
-    driver.implicitly_wait(10)
-    wait = WebDriverWait(driver, 10)
-    time.sleep(3)
+    driver.implicitly_wait(20)
+    wait = WebDriverWait(driver, 20)
 
     try:
         # Navega até o site
@@ -52,7 +50,6 @@ def search_videos():
         )
         search_input = form.find_element(By.TAG_NAME, "input")
         search_input.send_keys(search_term + Keys.ENTER)
-        time.sleep(3)
 
         # Espera os resultados carregarem
         wait.until(
